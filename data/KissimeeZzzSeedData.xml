@@ -4,6 +4,10 @@
     <moqui.basic.LocalizedEntityField entityName="moqui.basic.Geo" fieldName="geoName" pkValue="CHN" locale="zh_CN" localized="中国"/>
     <moqui.basic.LocalizedEntityField entityName="moqui.basic.Geo" fieldName="geoName" pkValue="DEU" locale="zh_CN" localized="德国"/>
     <moqui.basic.LocalizedEntityField entityName="moqui.basic.Geo" fieldName="geoName" pkValue="JPN" locale="zh_CN" localized="日本"/>
+    <moqui.basic.LocalizedEntityField entityName="mantle.product.ProductDimensionType" fieldName="description" pkValue="Depth" locale="zh_CN" localized="深度"/>
+    <moqui.basic.LocalizedEntityField entityName="mantle.product.ProductDimensionType" fieldName="description" pkValue="Height" locale="zh_CN" localized="高度"/>
+    <moqui.basic.LocalizedEntityField entityName="mantle.product.ProductDimensionType" fieldName="description" pkValue="Width" locale="zh_CN" localized="宽度"/>
+
     <moqui.basic.LocalizedEntityField entityName="moqui.basic.StatusItem" fieldName="description" pkValue="OrderSent" locale="zh_CN" localized="已发送"/>
     <moqui.basic.LocalizedEntityField entityName="moqui.basic.StatusItem" fieldName="description" pkValue="OrderCompleted" locale="zh_CN" localized="已完成"/>
 

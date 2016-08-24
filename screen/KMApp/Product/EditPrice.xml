@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0-xsd"
+        default-menu-title="价格" default-menu-index="2">
+    <parameter name="productId" required="true"/>
+    <transition name="createProductPrice">
+        <service-call name="create#mantle.product.ProductPrice"/>
+        <default-response url="."/>
+    </transition>
+    <transition name="updateProductPrice">
+        <service-call name="update#mantle.product.ProductPrice"/>
+        <default-response url="."/>
+    </transition>
+
+    <actions>
+        <entity-find entity-name="mantle.product.ProductPrice" list="priceList">
+            <search-form-inputs default-order-by="price"/>
+            <econdition field-name="productId"/>
+        </entity-find>
+    </actions>
+
+    <widgets>
+        <form-list name="PriceForm" list="priceList" transition="updateProductPrice">
+            <field name="productPriceId"><default-field><hidden/></default-field></field>
+            <field name="productId">
+                <header-field><hidden/></header-field>
+                <default-field><hidden/></default-field>
+            </field>
+            <field name="priceTypeEnumId">
+                <header-field title="Type" show-order-by="true">
+                    <widget-template-include location="component://webroot/template/screen/BasicWidgetTemplates.xml#enumDropDown">
+                        <set field="enumTypeId" value="ProductPriceType"/><set field="allowEmpty" value="true"/><set field="style" value=" "/></widget-template-include>
+                </header-field>
+                <default-field><display-entity entity-name="moqui.basic.Enumeration"/></default-field>
+            </field>
+            <field name="pricePurposeEnumId">
+                <header-field title="Purpose" show-order-by="true">
+                    <widget-template-include location="component://webroot/template/screen/BasicWidgetTemplates.xml#enumDropDown">
+                        <set field="enumTypeId" value="ProductPricePurpose"/><set field="allowEmpty" value="true"/><set field="style" value=" "/></widget-template-include>
+                </header-field>
+                <default-field><display-entity entity-name="moqui.basic.Enumeration"/></default-field>
+            </field>
+
+
+
+            <form-list-column><field-ref name="priceTypeEnumId"/><field-ref name="pricePurposeEnumId"/></form-list-column>
+        </form-list>
+    </widgets>
+
+</screen>

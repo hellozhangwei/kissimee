@@ -1,6 +1,37 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
             default-menu-title="主菜单" default-menu-index="10">
     <widgets>
-        <label text="dashboard"/>
+        <!--<label text="dashboard"/>-->
+        <container-row>
+
+            <row-col md="2">
+                <!--<label text="主菜单" type="h3"/>-->
+                <container>
+                    <link url="../Product" link-type="anchor">
+                        <image url="/popc/static/images/Supplier.png" url-type="screen"/></link>
+                    <link url="../Product" text="产品管理" link-type="anchor"/>
+                </container>
+
+
+                <container>
+                    <link url="../SalesOrder" link-type="anchor">
+                        <image url="/popc/static/images/Sales.png" url-type="screen"/></link>
+                    <link url="../SalesOrder" text="销售管理" link-type="anchor"/>
+                </container>
+
+                <container>
+                    <link url="../PurchaseOrder" link-type="anchor">
+                        <image url="/popc/static/images/Picking.png" url-type="screen"/></link>
+                    <link url="../PurchaseOrder" text="采购管理" link-type="anchor"/>
+                </container>
+
+                <container>
+                    <link url="../Inventory" link-type="anchor">
+                        <image url="/popc/static/images/Facility.png" url-type="screen"/></link>
+                    <link url="../Inventory" text="库存管理" link-type="anchor"/>
+                </container>
+            </row-col>
+
+        </container-row>
     </widgets>
 </screen>

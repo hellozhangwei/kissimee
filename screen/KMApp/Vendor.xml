@@ -4,7 +4,7 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
         include-child-content="true" menu-image="glyphicon glyphicon-flash" menu-image-type="icon" default-menu-title="岂止美ERP">
 
-    <subscreens default-item="Dashboard"/>
+    <!--<subscreens default-item="Dashboard"/>-->
 
     <widgets>
         <subscreens-panel id="km-app" type="popup" title="岂止美ERP"/>

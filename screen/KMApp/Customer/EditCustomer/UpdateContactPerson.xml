@@ -42,7 +42,6 @@
                 </default-field>
             </field>
             <field name="contactNumber">
-
                 <default-field title="电话"><text-line/></default-field>
             </field>
             <field name="submitButton">

@@ -1,9 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
-        default-menu-title="供应商管理" default-menu-index="50">
+        include-child-content="true" menu-image="glyphicon glyphicon-flash" menu-image-type="icon" default-menu-title="岂止美ERP">
+
+    <!--<subscreens default-item="Dashboard"/>-->
 
     <widgets>
-        <label text="Supplier"/>
+        <subscreens-panel id="km-app" type="popup" title="岂止美ERP"/>
     </widgets>
 </screen>

@@ -24,4 +24,13 @@
 
     <moqui.security.UserGroupMember userGroupId="KMAPP_ADMIN" userId="EX_JOHN_DOE" fromDate="1265184000000"/>
 
+
+
+    <Geo geoId="CHN_11_1" geoName="fengtai" geoTypeEnumId="GEOT_CITY" geoNameLocal="丰台区"/>
+    <Geo geoId="CHN_37_1" geoName="dezhou" geoTypeEnumId="GEOT_CITY" geoNameLocal="德州市"/>
+    <Geo geoId="CHN_13_1" geoName="shijiazhuang" geoTypeEnumId="GEOT_CITY" geoNameLocal="石家庄市"/>
+
+    <GeoAssoc geoId="CHN_11" toGeoId="CHN_11_1" geoAssocTypeEnumId="GAT_REGIONS"/>
+    <GeoAssoc geoId="CHN_37" toGeoId="CHN_37_1" geoAssocTypeEnumId="GAT_REGIONS"/>
+    <GeoAssoc geoId="CHN_13" toGeoId="CHN_13_1" geoAssocTypeEnumId="GAT_REGIONS"/>
 </entity-facade-xml>

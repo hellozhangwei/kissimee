@@ -259,7 +259,7 @@
 
 
 
-    <!-- ========== DEMO CUSTOMER DATA ========== -->
+ <!--   &lt;!&ndash; ========== DEMO CUSTOMER DATA ========== &ndash;&gt;
     <mantle.party.Party partyTypeEnumId="PtyOrganization">
         <mantle.party.Organization organizationName="裕华区要进芳口腔诊所"/>
         <mantle.party.PartyRole roleTypeId="Customer"/>
@@ -323,5 +323,5 @@
     <mantle.party.Party partyTypeEnumId="PtyOrganization">
         <mantle.party.Organization organizationName="张家口桥西人民医院"/>
         <mantle.party.PartyRole roleTypeId="Customer"/>
-    </mantle.party.Party>
+    </mantle.party.Party>-->
 </entity-facade-xml>

@@ -6,7 +6,7 @@
 
     <transition name="requestReturnOrder"><service-call name="mantle.order.ReturnServices.request#Return"/>
         <default-response url="."/></transition>
-    <transition name="approveReturnOrder"><service-call name="mantle.order.ReturnServices.approve#Return" in-map="[returnId:returnId, statusId:'ReturnRequested']"/>
+    <transition name="approveReturnOrder"><service-call name="mantle.order.ReturnServices.approve#Return" in-map="[returnId:returnId]"/>
         <default-response url="."/></transition>
 
     <transition name="receiveReturnOrder"><service-call name="mantle.order.ReturnServices.receive#ReturnItem" in-map="[returnId:returnId, statusId:'ReturnReceived', returnItemSeqId:returnItemSeqId]"/>
@@ -38,48 +38,13 @@
 
         </container>
         <form-list name="ReturnItemList" list="returnItemList">
-            <field name="returnItemSeqId">
-                <default-field title="编号">
-                    <display/>
-                </default-field>
-            </field>
-
-            <field name="productId">
-                <default-field title="产品编号">
-                    <display/>
-                </default-field>
-            </field>
-
-            <field name="description">
-                <default-field title="描述">
-                    <display/>
-                </default-field>
-            </field>
-
-            <field name="orderId">
-                <default-field title="订单编号">
-                    <display/>
-                </default-field>
-            </field>
-
-            <field name="orderItemSeqId">
-                <default-field title="订单明细编号">
-                    <display/>
-                </default-field>
-            </field>
-
-            <field name="returnQuantity">
-                <default-field title="退货数量">
-                    <display/>
-                </default-field>
-            </field>
-
-            <field name="returnPrice">
-                <default-field title="退货单价">
-                    <display/>
-                </default-field>
-            </field>
-
+            <field name="returnItemSeqId"><default-field title="编号"><display/></default-field></field>
+            <field name="productId"><default-field title="产品编号"><display/></default-field></field>
+            <field name="description"><default-field title="描述"><display/></default-field></field>
+            <field name="orderId"><default-field title="订单编号"><display/></default-field></field>
+            <field name="orderItemSeqId"><default-field title="订单明细编号"><display/></default-field></field>
+            <field name="returnQuantity"><default-field title="退货数量"><display/></default-field></field>
+            <field name="returnPrice"><default-field title="退货单价"><display format="#0.00"/></default-field></field>
             <field name="returnReasonEnumId">
                 <default-field title="退货原因">
                     <display-entity entity-name="moqui.basic.Enumeration" text="${description}"/>

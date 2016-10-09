@@ -6,16 +6,24 @@
 
     <transition name="returnOrder">
         <actions>
-            <set field="returnHeaderIn" from="new HashMap()"/>
-            <set field="returnHeaderIn.orderId" from="context.orderId_0"/>
-            <set field="returnHeaderIn.orderPartSeqId" from="context.orderPartSeqId_0"/>
-            <service-call name="mantle.order.ReturnServices.create#ReturnFromOrder" in-map="returnHeaderIn" out-map="context"/>
-
-            <service-call name="mantle.order.ReturnServices.add#OrderItemToReturn" in-map="context" multi="true"/>
+            <if condition="_rowSubmit_0">
+                <set field="returnHeaderIn" from="new HashMap()"/>
+                <set field="returnHeaderIn.orderId" from="context.orderId_0"/>
+                <set field="returnHeaderIn.orderPartSeqId" from="context.orderPartSeqId_0"/>
+                <service-call name="mantle.order.ReturnServices.create#ReturnFromOrder" in-map="returnHeaderIn" out-map="context"/>
+                <service-call name="mantle.order.ReturnServices.add#OrderItemToReturn" in-map="context" multi="true"/>
+                <else>
+                    <return message="没有选中订单！" error="true"/>
+                </else>
+            </if>
         </actions>
-        <default-response url="//km/Return/ReturnDetail">
+
+        <default-response url="//km/Return/ReturnDetail" save-current-screen="">
             <parameter name="returnId"/>
         </default-response>
+        <error-response>
+            <parameter name="orderId" from="orderId_0"/>
+        </error-response>
     </transition>
 
     <actions>
@@ -37,6 +45,7 @@
         <form-list name="OrderHistoryList" list="orderItemInfoList" multi="true" transition="returnOrder" paginate="false">
             <field name="orderId"><default-field><hidden/></default-field></field>
             <field name="orderPartSeqId"><default-field><hidden/></default-field></field>
+            <field name="responseImmediate"><default-field><hidden default-value="Y"/></default-field></field>
             <field name="returnReasonEnumId"><default-field><hidden default-value="RrsnDidNotWant"/></default-field></field>
             <field name="returnResponseEnumId"><default-field><hidden default-value="RrspRefund"/></default-field></field>
             <field name="_useRowSubmit"><default-field><hidden default-value="true"/></default-field></field>

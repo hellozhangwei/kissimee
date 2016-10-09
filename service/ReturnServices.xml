@@ -36,8 +36,6 @@
                 <select-field field-name="unitAmount"/>
                 <order-by field-name="orderId"/><order-by field-name="orderItemSeqId"/>
             </entity-find>
-
-            <!--<log message="==${returnableItems}==" level="info"/>-->
             <set field="orderItemInfoList" from="[]"/>
             <iterate list="returnableItems" entry="returnableItem">
                 <entity-find entity-name="mantle.order.return.ReturnItemQuantity" list="riqList">
@@ -49,8 +47,6 @@
                 <set field="returnedQuantity" from="(riqList ? (riqList[0].returnQuantity ?: 0) : 0) as BigDecimal"/>
                 <set field="returnableQuantity" from="(returnableItem.invoiceQuantity ?: 0) - returnedQuantity"/>
                 <set field="returnPrice" value="${returnableItem.unitAmount}"/>
-
-                <log level="info" message="======${returnableItem.unitAmount}========"/>
                 <if condition="returnableQuantity > 0">
                     <script>orderItemInfoList.add([orderId:returnableItem.orderId, orderItemSeqId:returnableItem.orderItemSeqId,
                         itemTypeEnumId:returnableItem.itemTypeEnumId, productId:returnableItem.productId,
@@ -58,7 +54,6 @@
                         returnedQuantity:returnedQuantity, returnableQuantity:returnableQuantity, orderPartSeqId:returnableItem.orderPartSeqId, returnPrice:returnableItem.unitAmount])</script>
                 </if>
             </iterate>
-            <log message="============${orderItemInfoList.returnPrice}==============" level="info"/>
         </actions>
     </service>
 </services>

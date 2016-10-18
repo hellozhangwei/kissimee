@@ -4,9 +4,8 @@
 
     <transition name="createProduct">
         <actions>
-            <service-call name="create#mantle.product.Product" in-map="context"/>
+            <service-call name="create#mantle.product.Product" in-map="context" out-map="context"/>
             <service-call name="create#mantle.product.ProductIdentification" in-map="context"/>
-            <message>新建成功</message>
         </actions>
         <default-response url="../EditProduct"/>
     </transition>
@@ -141,7 +140,10 @@
                     </section>
                 </default-field>
             </field>
-
+            <field name="submitButton">
+                <header-field title="Find"><submit/></header-field>
+                <default-field><display text=" "/></default-field>
+            </field>
         </form-list>
     </widgets>
 </screen>

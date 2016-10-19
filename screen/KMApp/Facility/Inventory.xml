@@ -3,8 +3,19 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
         default-menu-title="盘点" default-menu-index="40">
 
+        <!--
+        1. How much we will keep in stock as a minimum
+        2. How much we will re-order from a supplier if that minimum is reached
+        3. How many days will it take for the supplier to fulfill the purchase order
+        -->
+
         <transition name="receiveInventory">
             <service-call name="InventoryServices.receive#Inventory"/>
+            <default-response url="." parameter-map="[productId:productId]"/>
+        </transition>
+
+        <transition name="updateInventory">
+            <service-call name="InventoryServices.update#Inventory"/>
             <default-response url="." parameter-map="[productId:productId]"/>
         </transition>
 
@@ -64,7 +75,7 @@
                 <field name="submitButton2">
                     <header-field title="查找"><submit/></header-field>
                     <default-field title="">
-                        <container-dialog id="incomingFacility" button-text="增加库存">
+                        <container-dialog id="addInventory" button-text="增加库存">
                             <form-single name="ReceiveInventory" transition="receiveInventory">
                                 <field name="facilityId"><default-field ><hidden/></default-field></field>
                                 <field name="productId"><default-field><hidden/></default-field></field>
@@ -84,6 +95,32 @@
                                 <field name="quantity"><default-field title="数量"><text-line/></default-field></field>
                                 <field name="submitButton">
                                     <default-field title="新建">
+                                        <submit/>
+                                    </default-field>
+                                </field>
+                            </form-single>
+                        </container-dialog>
+
+                        <container-dialog id="updateInventory" button-text="修正库存">
+                            <form-single name="UpdateInventory" transition="updateInventory">
+                                <field name="facilityId"><default-field ><hidden/></default-field></field>
+                                <field name="productId"><default-field><hidden/></default-field></field>
+                                <field name="productName"><default-field title="产品"><display text="${productName} [${productId}]"/></default-field></field>
+                                <field name="facilityId">
+                                    <default-field title="仓库">
+                                        <drop-down>
+                                            <entity-options key="${facilityId}" text="${facilityName}">
+                                                <entity-find entity-name="mantle.facility.Facility">
+                                                    <econdition field-name="ownerPartyId" value="ORG_KISSIMEE" operator="equals"/>
+                                                    <select-field field-name="facilityId,facilityName"/>
+                                                </entity-find>
+                                            </entity-options>
+                                        </drop-down>
+                                    </default-field>
+                                </field>
+                                <field name="quantity"><default-field title="数量"><text-line/></default-field></field>
+                                <field name="submitButton">
+                                    <default-field title="修正">
                                         <submit/>
                                     </default-field>
                                 </field>

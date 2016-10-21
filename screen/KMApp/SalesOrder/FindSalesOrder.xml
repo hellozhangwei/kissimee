@@ -4,7 +4,22 @@
     <transition name="orderDetail"><default-response url="../SalesOrderDetail"/></transition>
 
     <transition name="createOrder">
-        <service-call name="mantle.order.OrderServices.create#Order"/>
+        <actions>
+            <script>
+                Calendar c1 = ec.user.nowCalendar
+                int placeDateYear = c1.get(1);
+                int placeDateMonth = c1.get(2)+1;
+                int placeDateDay = c1.get(Calendar.DAY_OF_MONTH);
+
+            </script>
+            <service-call name="mantle.order.OrderServices.create#Order" in-map="context" out-map="context">
+                <!--<field-map field-name="placedDate" from="ec.user.nowTimestamp"/>-->
+                <field-map field-name="placeDateYear"/>
+                <field-map field-name="placeDateMonth"/>
+                <field-map field-name="placeDateDay"/>
+            </service-call>
+        </actions>
+
         <default-response url="../SalesOrderDetail"/>
     </transition>
     <transition name="returnSalesOrder">

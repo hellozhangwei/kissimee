@@ -105,7 +105,6 @@
             <key-map field-name="orderId"/><key-map field-name="orderPartSeqId"/></member-entity>
         <member-entity entity-alias="OIBL" entity-name="mantle.order.OrderItemBilling" join-from-alias="OITM">
             <key-map field-name="orderId"/><key-map field-name="orderItemSeqId"/></member-entity>
-
         <alias name="orderId" entity-alias="OITM"/>
         <alias name="orderItemSeqId" entity-alias="OITM"/>
         <alias name="itemTypeEnumId" entity-alias="OITM"/>
@@ -120,4 +119,22 @@
         <alias name="invoiceQuantity" entity-alias="OIBL" field="quantity" function="sum"/>
     </view-entity>
 
+    <view-entity entity-name="OrderStatisticsView" package="cn.com.kissimee">
+        <member-entity entity-alias="ORHD" entity-name="mantle.order.OrderHeader"/>
+        <member-entity entity-alias="ORPT" entity-name="mantle.order.OrderPart" join-from-alias="ORHD">
+            <key-map field-name="orderId"/>
+        </member-entity>
+        <alias name="vendorPartyId" entity-alias="ORPT"/>
+        <alias name="statusId" entity-alias="ORHD" field="statusId"/>
+        <alias name="placeDateYear" entity-alias="ORHD" field="placeDateYear"/>
+        <alias name="placeDateMonth" entity-alias="ORHD" field="placeDateMonth"/>
+        <alias name="placeDateDay" entity-alias="ORHD" field="placeDateDay"/>
+        <alias name="currencyUomId" entity-alias="ORHD" field="currencyUomId"/>
+        <alias name="grandTotal" entity-alias="ORHD" field="grandTotal" function="sum"/>
+        <alias name="orderCount" entity-alias="ORHD" field="orderId" function="count"/>
+        <entity-condition>
+            <econdition field-name="vendorPartyId" value="ORG_KISSIMEE"/>
+            <econdition field-name="statusId" operator="in" value="OrderApproved,OrderSent,OrderPlaced"/>
+        </entity-condition>
+    </view-entity>
 </entities>

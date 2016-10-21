@@ -1,37 +1,115 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
             default-menu-title="主菜单" default-menu-index="10">
+    <actions>
+        <script>
+            Calendar c1 = ec.user.nowCalendar
+            int thisYear = c1.get(1);
+            int thisMonth = c1.get(2)+1;
+            int firstDayOfMonth = 1;
+            int today = c1.get(Calendar.DAY_OF_MONTH);
+            int week = c1.get(Calendar.DAY_OF_WEEK)-1;
+
+            Date dt= new Date();
+            long now = dt.getTime();
+            long sevenDay = now - 7*24*60*60*1000;
+
+            c1.setTimeInMillis(sevenDay);
+            int sevenBeforeYear = c1.get(1);
+            int sevenBeforeMonth = c1.get(2)+1;
+            int sevenBeforeDay = c1.get(Calendar.DAY_OF_MONTH);
+
+        </script>
+        <log message="=======${today}======"/>
+        <entity-find entity-name="cn.com.kissimee.OrderStatisticsView" list="todayOrderList">
+            <econdition field-name="placeDateYear" operator="equals" from="thisYear"/>
+            <econdition field-name="placeDateMonth" operator="equals" from="thisMonth"/>
+            <econdition field-name="placeDateDay" operator="equals" from="today"/>
+            <select-field field-name="grandTotal"/>
+            <select-field field-name="currencyUomId"/>
+            <select-field field-name="orderCount"/>
+        </entity-find>
+        <entity-find entity-name="cn.com.kissimee.OrderStatisticsView" list="last7DaysOrderList">
+            <econdition field-name="placeDateYear" operator="equals" from="sevenBeforeYear"/>
+            <econdition field-name="placeDateMonth" operator="equals" from="sevenBeforeMonth"/>
+            <econdition field-name="placeDateDay" operator="greater-equals" from="sevenBeforeDay"/>
+            <select-field field-name="grandTotal"/>
+            <select-field field-name="currencyUomId"/>
+            <select-field field-name="orderCount"/>
+        </entity-find>
+        <entity-find entity-name="cn.com.kissimee.OrderStatisticsView" list="thisMonthOrderList">
+            <econdition field-name="placeDateYear" operator="equals" from="thisYear"/>
+            <econdition field-name="placeDateMonth" operator="equals" from="thisMonth"/>
+            <econdition field-name="placeDateDay" operator="greater-equals" from="firstDayOfMonth"/>
+            <select-field field-name="grandTotal"/>
+            <select-field field-name="currencyUomId"/>
+            <select-field field-name="orderCount"/>
+        </entity-find>
+        <entity-find entity-name="cn.com.kissimee.OrderStatisticsView" list="thisYearList">
+            <econdition field-name="placeDateYear" operator="equals" from="thisYear"/>
+            <select-field field-name="grandTotal"/>
+            <select-field field-name="currencyUomId"/>
+            <select-field field-name="orderCount"/>
+        </entity-find>
+
+        <set field="todayOrder" from="todayOrderList[0]?:[:]"/>
+        <set field="last7DaysOrder" from="last7DaysOrderList[0]?:[:]"/>
+        <set field="thisMonthOrder" from="thisMonthOrderList[0]?:[:]"/>
+        <set field="thisYearOrder" from="thisYearList[0]?:[:]"/>
+    </actions>
     <widgets>
         <container-row>
             <row-col md="2">
                 <container-box>
                     <box-header><label text="应收金额，笔数" type="h5"/></box-header>
-                    <box-body></box-body>
+                    <box-body>
+
+                    </box-body>
                 </container-box>
             </row-col>
             <row-col md="2">
                 <container-box>
-                    <box-header> <label text="应付金额，笔数"/></box-header>
+                    <box-header><label text="应付金额，笔数"/></box-header>
                     <box-body></box-body>
                 </container-box>
             </row-col>
         </container-row>
         <container-row>
-            <row-col md="2">
+            <row-col md="3">
                 <container-box>
-                    <box-header> <label text="今日订单金额，笔数"/></box-header>
-                    <box-body></box-body>
+                    <box-header><label text="${'今日订单('+(todayOrder.orderCount?:0)+')'}"/></box-header>
+                    <box-body>
+                        <display text="金额:"/>
+                        <display text="${todayOrder.grandTotal?:0}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                    </box-body>
+                </container-box>
+
+                <container-box>
+                    <box-header>
+                        <label text="${'7日内订单('+last7DaysOrder?.orderCount+')'}"/>
+                    </box-header>
+                    <box-body>
+                        <display text="金额:"/>
+                        <display text="${last7DaysOrder?.grandTotal}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                    </box-body>
+                </container-box>
+
+                <container-box>
+                    <box-header>
+                        <label text="${'本月订单('+(thisMonthOrder.orderCount?:0)+')'}"/>
+                    </box-header>
+                    <box-body>
+                        <display text="金额:"/>
+                        <display text="${thisMonthOrder?.grandTotal}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                    </box-body>
                 </container-box>
                 <container-box>
-                    <box-header> <label text="过往7日订单金额，笔数"/></box-header>
-                    <box-body></box-body>
-                </container-box>
-                <container-box>
-                    <box-header> <label text="过往30日订单金额，笔数"/></box-header>
-                    <box-body></box-body>
-                </container-box>
-                <container-box>
-                    <box-header> <label text="本年订单金额，笔数"/></box-header>
-                    <box-body></box-body>
+                    <box-header>
+                        <label text="${'本年订单('+thisYearOrder?.orderCount+')'}"/>
+                    </box-header>
+                    <box-body>
+                        <display text="金额:"/>
+                        <display text="${thisYearOrder?.grandTotal}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                    </box-body>
                 </container-box>
             </row-col>
         </container-row>

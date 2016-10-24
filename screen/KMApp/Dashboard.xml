@@ -72,43 +72,51 @@
                     <box-body></box-body>
                 </container-box>
             </row-col>
-        </container-row>
-        <container-row>
-            <row-col md="3">
-                <container-box>
-                    <box-header><label text="${'今日订单('+(todayOrder.orderCount?:0)+')'}"/></box-header>
-                    <box-body>
-                        <display text="金额:"/>
-                        <display text="${todayOrder.grandTotal?:0}" text-format="#0.00" currency-unit-field="currencyUomId"/>
-                    </box-body>
-                </container-box>
-
+            <row-col md="2">
                 <container-box>
                     <box-header>
-                        <label text="${'7日内订单('+last7DaysOrder?.orderCount+')'}"/>
+                        <label text="${'今日订单('+(todayOrder.orderCount?:0)+')'}"/>
                     </box-header>
                     <box-body>
                         <display text="金额:"/>
-                        <display text="${last7DaysOrder?.grandTotal}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                        <display text="${todayOrder.grandTotal?:0}" text-format="#0.00"
+                                 currency-unit-field="currencyUomId"/>
                     </box-body>
                 </container-box>
-
+            </row-col>
+            <row-col md="2">
+                <container-box>
+                    <box-header>
+                        <label text="${'7日内订单(' + (last7DaysOrder?.orderCount?:0) + ')'}"/>
+                    </box-header>
+                    <box-body>
+                        <display text="金额:"/>
+                        <display text="${last7DaysOrder?.grandTotal?:0}" text-format="#0.00"
+                                 currency-unit-field="currencyUomId"/>
+                    </box-body>
+                </container-box>
+            </row-col>
+            <row-col md="2">
                 <container-box>
                     <box-header>
                         <label text="${'本月订单('+(thisMonthOrder.orderCount?:0)+')'}"/>
                     </box-header>
                     <box-body>
                         <display text="金额:"/>
-                        <display text="${thisMonthOrder?.grandTotal}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                        <display text="${thisMonthOrder?.grandTotal?:0}" text-format="#0.00"
+                                 currency-unit-field="currencyUomId"/>
                     </box-body>
                 </container-box>
+            </row-col>
+            <row-col md="2">
                 <container-box>
                     <box-header>
-                        <label text="${'本年订单('+thisYearOrder?.orderCount+')'}"/>
+                        <label text="${'本年订单(' + (thisYearOrder?.orderCount?:0) + ')'}"/>
                     </box-header>
                     <box-body>
                         <display text="金额:"/>
-                        <display text="${thisYearOrder?.grandTotal}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                        <display text="${thisYearOrder?.grandTotal?:0}" text-format="#0.00"
+                                 currency-unit-field="currencyUomId"/>
                     </box-body>
                 </container-box>
             </row-col>

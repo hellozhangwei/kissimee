@@ -10,11 +10,11 @@
         <set field="shipmentTypeSet" from="incomingTypeOut.enumIdSet"/>
 
         <entity-find entity-name="mantle.shipment.ShipmentFindView" list="shipmentList">
-
             <econdition field-name="shipmentTypeEnumId" operator="in" from="shipmentTypeSet" ignore="!shipmentTypeSet"/>
             <select-field field-name="shipmentId,shipmentTypeEnumId,shipWorkEffortId"/>
             <select-field field-name="originFacilityName,destinationFacilityName"/>
             <select-field field-name="fromPartyId,toPartyId,statusId,entryDate,estimatedReadyDate"/>
+            <order-by field-name="-shipmentId"/>
         </entity-find>
     </actions>
 

@@ -11,6 +11,10 @@
         <default-response url="."/></transition>
     <transition name="sendOrder"><service-call name="mantle.order.OrderServices.update#OrderStatus" in-map="[orderId:orderId, statusId:'OrderSent']"/>
         <default-response url="."/></transition>
+    <transition name="shipmentOrder">
+        <service-call name="mantle.shipment.ShipmentServices.create#OrderPartShipment"/>
+        <default-response url="."/>
+    </transition>
     <transition name="completeOrderPart"><service-call name="mantle.order.OrderServices.complete#OrderPart"/>
         <default-response url="."/></transition>
     <transition name="cancelOrder"><service-call name="mantle.order.OrderServices.cancel#Order"/>
@@ -70,6 +74,23 @@
               condition="orderHeader.statusId == 'OrderPlaced' &amp;&amp; ec.user.hasPermission('ORDER_APPROVE')"/>
         <link url="sendOrder" text="发送订单" link-type="hidden-form"
               condition="orderHeader.statusId == 'OrderApproved'"/>
+        <section name="ShipOrderPartSection">
+             <condition><expression>quantityNotShippedByPart.get(orderPartInfo.orderPart.orderPartSeqId) &amp;&amp;
+            (orderHeader.statusId == "OrderApproved" || orderHeader.statusId == "OrderSent")</expression></condition>
+            <widgets>
+                <link url="shipmentOrder" text="创建装运" link-type="hidden-form">
+                    <parameter name="orderId"/>
+                    <parameter name="orderPartSeqId" from="orderPartInfo.orderPart.orderPartSeqId"/>
+                </link>
+            </widgets>
+        </section>
+        <section-iterate name="ShipmentLinks" list="orderPartInfo.partShipmentIdSet" entry="shipmentId">
+            <widgets><link url="//PopcAdmin/Shipment/ShipmentDetail" text="装运单号 #${shipmentId}" link-type="anchor-button"/></widgets>
+        </section-iterate>
+
+
+
+
         <link url="cancelOrder" text="取消订单" link-type="hidden-form"
               condition="orderHeader.statusId in ['OrderPlaced', 'OrderApproved']"/>
 

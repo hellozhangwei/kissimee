@@ -19,7 +19,20 @@
             int sevenBeforeDay = c1.get(Calendar.DAY_OF_MONTH);
 
         </script>
-        <log message="=======${today}======"/>
+        <entity-find entity-name="mantle.account.invoice.InvoiceSummary" list="unreceivableInvoiceList">
+            <econdition field-name="fromPartyId" value="ORG_KISSIMEE"/>
+            <econdition field-name="statusId" operator="in" from="['InvoiceInProcess', 'InvoiceIncoming', 'InvoiceReceived']"/>
+            <select-field field-name="grandTotal"/>
+            <select-field field-name="invoiceCount"/>
+            <select-field field-name="currencyUomId"/>
+        </entity-find>
+        <entity-find entity-name="mantle.account.invoice.InvoiceSummary" list="unpaidInvoiceList">
+            <econdition field-name="toPartyId" value="ORG_KISSIMEE"/>
+            <econdition field-name="statusId" operator="in" from="['InvoiceInProcess', 'InvoiceFinalized', 'InvoiceSent', 'InvoiceWriteOff', 'InvoiceReceived', 'InvoiceApproved']"/>
+            <select-field field-name="grandTotal"/>
+            <select-field field-name="invoiceCount"/>
+            <select-field field-name="currencyUomId"/>
+        </entity-find>
         <entity-find entity-name="cn.com.kissimee.OrderStatisticsView" list="todayOrderList">
             <econdition field-name="placeDateYear" operator="equals" from="thisYear"/>
             <econdition field-name="placeDateMonth" operator="equals" from="thisMonth"/>
@@ -50,7 +63,8 @@
             <select-field field-name="currencyUomId"/>
             <select-field field-name="orderCount"/>
         </entity-find>
-
+        <set field="unReceivable" from="unreceivableInvoiceList[0]?:[:]"/>
+        <set field="unPaid" from="unpaidInvoiceList[0]?:[:]"/>
         <set field="todayOrder" from="todayOrderList[0]?:[:]"/>
         <set field="last7DaysOrder" from="last7DaysOrderList[0]?:[:]"/>
         <set field="thisMonthOrder" from="thisMonthOrderList[0]?:[:]"/>
@@ -60,16 +74,27 @@
         <container-row>
             <row-col md="2">
                 <container-box>
-                    <box-header><label text="应收金额，笔数" type="h5"/></box-header>
+                    <box-header>
+                        <label text="${'应收金额('+(unReceivable.invoiceCount?:0)+')'}"/>
+                        <!--<label text="应收金额，笔数" type="h5"/>-->
+                    </box-header>
                     <box-body>
-
+                        <display text="金额:"/>
+                        <display text="${unReceivable.grandTotal?:0}" text-format="#0.00"
+                                 currency-unit-field="currencyUomId"/>
                     </box-body>
                 </container-box>
             </row-col>
             <row-col md="2">
                 <container-box>
-                    <box-header><label text="应付金额，笔数"/></box-header>
-                    <box-body></box-body>
+                    <box-header>
+                        <label text="${'应付金额('+(unPaid.invoiceCount?:0)+')'}"/>
+                    </box-header>
+                    <box-body>
+                        <display text="金额:"/>
+                        <display text="${unPaid.grandTotal?:0}" text-format="#0.00"
+                                 currency-unit-field="currencyUomId"/>
+                    </box-body>
                 </container-box>
             </row-col>
             <row-col md="2">

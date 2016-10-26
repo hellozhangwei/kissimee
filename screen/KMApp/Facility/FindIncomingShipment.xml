@@ -3,7 +3,43 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
         default-menu-title="收货单" default-menu-index="30">
 
+    <actions>
+
+        <service-call name="org.moqui.impl.BasicServices.find#EnumerationByParent" out-map="incomingTypeOut"
+                      in-map="[parentEnumId:'ShpTpIncoming']"/>
+        <set field="shipmentTypeSet" from="incomingTypeOut.enumIdSet"/>
+
+        <entity-find entity-name="mantle.shipment.ShipmentFindView" list="shipmentList">
+
+            <econdition field-name="shipmentTypeEnumId" operator="in" from="shipmentTypeSet" ignore="!shipmentTypeSet"/>
+            <select-field field-name="shipmentId,shipmentTypeEnumId,shipWorkEffortId"/>
+            <select-field field-name="originFacilityName,destinationFacilityName"/>
+            <select-field field-name="fromPartyId,toPartyId,statusId,entryDate,estimatedReadyDate"/>
+        </entity-find>
+    </actions>
+
     <widgets>
-       <label text="收货单"/>
+        <form-list name="ShipmentList" list="shipmentList" skip-form="true">
+            <field name="shipmentId">
+                <header-field title="运单号" show-order-by="true"><text-find size="10" hide-options="true"/></header-field>
+                <default-field><link url="shipmentDetail" text="${shipmentId}" link-type="anchor"/></default-field>
+            </field>
+            <field name="statusId">
+                <default-field title="状态"><display-entity entity-name="moqui.basic.StatusItem"/></default-field>
+            </field>
+            <field name="destinationFacilityId">
+                <default-field title="收货仓库"><display/></default-field>
+            </field>
+            <field name="fromPartyId">
+                <default-field title="发货人"><display-entity entity-name="mantle.party.PartyDetail" text="${organizationName?:''}${firstName?:''} ${lastName?:''} [${pseudoId}]"/></default-field>
+            </field>
+            <field name="entryDate"><header-field show-order-by="true"><date-period/></header-field>
+                <default-field title="创建日期"><display/></default-field>
+            </field>
+            <field name="findButton">
+                <header-field title="Find"><submit/></header-field>
+                <default-field><link url="shipmentDetail" text="查看"/></default-field>
+            </field>
+        </form-list>
     </widgets>
 </screen>

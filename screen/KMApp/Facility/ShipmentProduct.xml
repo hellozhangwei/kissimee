@@ -1,0 +1,73 @@
+
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd" default-menu-include="false">
+
+    <parameter name="shipmentId" required="true"/>
+
+    <actions>
+        <entity-find entity-name="mantle.shipment.ShipmentItemDetail" list="shipmentItemDetailList">
+            <econdition field-name="shipmentId"/>
+        </entity-find>
+    </actions>
+
+    <widgets>
+        <form-list name="ShipmentItemDetailList" list="shipmentItemDetailList" multi="true">
+            <row-actions>
+               <!-- <entity-find entity-name="Asset" list="assetList">
+                    <econdition-object field="[productId:productId, facilityId:facilityId]"/>
+                </entity-find>-->
+            </row-actions>
+            <field name="productId">
+                <default-field>
+                    <display/>
+                </default-field>
+            </field>
+            <field name="productName">
+                <default-field><display/></default-field>
+            </field>
+
+            <field name="quantity">
+                <default-field><display/></default-field>
+            </field>
+
+            <field name="quantityAccepted">
+                <default-field><text-line default-value="${quantity}" size="5"/></default-field>
+            </field>
+
+            <field name="quantityRejected">
+                <default-field><text-line default-value="0" size="5"/></default-field>
+            </field>
+
+            <field name="rejectionReasonEnumId">
+                <default-field>
+                     <drop-down>
+                         <option text="" key=""/>
+                         <entity-options key="" text="">
+                             <entity-find entity-name="Enumeration">
+                                 <econdition field-name="enumTypeId" value="RejectionReason"/>
+                             </entity-find>
+                         </entity-options>
+                     </drop-down>
+                </default-field>
+            </field>
+            <field name="assetId">
+                <default-field>
+                     <text-line size="5"/>
+                </default-field>
+            </field>
+
+            <field name="facilityId">
+                <default-field>
+                     <text-line size="5"/>
+                </default-field>
+            </field>
+
+            <field name="submit">
+                <default-field>
+                    <submit/>
+                </default-field>
+            </field>
+
+        </form-list>
+    </widgets>
+</screen>

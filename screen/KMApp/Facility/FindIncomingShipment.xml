@@ -37,8 +37,12 @@
                 <default-field title="创建日期"><display/></default-field>
             </field>
             <field name="findButton">
-                <header-field title="Find"><submit/></header-field>
-                <default-field><link url="shipmentDetail" text="查看"/></default-field>
+                <header-field title="查找"><submit/></header-field>
+                <default-field>
+                    <link url="../ShipmentProduct" text="收货">
+                        <parameter name="shipmentId"/>
+                    </link>
+                </default-field>
             </field>
         </form-list>
     </widgets>

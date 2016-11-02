@@ -3,6 +3,40 @@
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd" default-menu-include="false">
 
     <parameter name="shipmentId" required="true"/>
+    <transition name="shipmentOrder">
+        <actions>
+            <script><![CDATA[
+                int size = new Integer(ec.web.parameters.listSize_0)
+                boolean rowSelected = false
+                for(int i=0;i<size;i++){
+                    if(ec.web.parameters.get('_rowSubmit_' + i)=='true'){
+                        rowSelected = true
+                        break
+                    }
+                }
+               ]]></script>
+            <log message="====18==${rowSelected}==="/>
+            <if condition="rowSelected">
+                <set field="shipmentId" from="context.shipmentId_0"/>
+                <set field="productId" from="context.productId_0"/>
+                <set field="facilityId" from="context.facilityId_0"/>
+                <set field="quantityAccepted" from="context.quantityAccepted_0"/>
+                <set field="quantityRejected" from="context.quantityRejected_0"/>
+                <set field="rejectionReasonEnumId" from="context.rejectionReasonEnumId_0"/>
+                <service-call name="mantle.shipment.ShipmentServices.receive#ShipmentProduct" in-map="context" out-map="context" multi="true"/>
+                <service-call name="mantle.shipment.ShipmentServices.update#ShipmentItem" in-map="context" multi="true"/>
+                <else>
+                    <return message="没有选中订单！" error="true"/>
+                </else>
+            </if>
+        </actions>
+        <default-response url="./">
+            <parameter name="shipmentId" from="context.shipmentId"/>
+        </default-response>
+        <error-response>
+            <parameter name="shipmentId" from="shipmentId_0"/>
+        </error-response>
+    </transition>
 
     <actions>
         <entity-find entity-name="mantle.shipment.ShipmentItemDetail" list="shipmentItemDetailList">
@@ -11,35 +45,31 @@
     </actions>
 
     <widgets>
-        <form-list name="ShipmentItemDetailList" list="shipmentItemDetailList" multi="true">
+        <form-list name="ShipmentItemDetailList" list="shipmentItemDetailList" transition="shipmentOrder" multi="true" paginate="false">
             <row-actions>
-               <!-- <entity-find entity-name="Asset" list="assetList">
-                    <econdition-object field="[productId:productId, facilityId:facilityId]"/>
-                </entity-find>-->
+                <entity-find entity-name="mantle.product.asset.Asset" list="assetIdlList">
+                    <econdition field-name="productId"/>
+                    <select-field field-name="assetId"/>
+                    <select-field field-name="facilityId"/>
+                </entity-find>
             </row-actions>
-            <field name="productId">
-                <default-field>
-                    <display/>
-                </default-field>
-            </field>
-            <field name="productName">
-                <default-field><display/></default-field>
-            </field>
-
-            <field name="quantity">
-                <default-field><display/></default-field>
-            </field>
-
+            <field name="shipmentId"><default-field><hidden/></default-field></field>
+            <field name="_useRowSubmit"><default-field><hidden default-value="true"/></default-field></field>
+            <field name="listSize"><default-field><hidden default-value="${shipmentItemDetailList.size()}"/></default-field></field>
+            <field name="_rowSubmit"><default-field title=" "><check no-current-selected-key="false"><option key="true" text=" "/></check></default-field></field>
+            <field name="productId"><default-field title="产品编号"><display/></default-field></field>
+            <field name="productName"><default-field title="产品名称"><display/></default-field></field>
+            <field name="quantity"><default-field title="数量"><display/></default-field></field>
+            <field name="quantityAcceptedTotal"><default-field title="已接收数量"><display/></default-field></field>
             <field name="quantityAccepted">
-                <default-field><text-line default-value="${quantity}" size="5"/></default-field>
+                <default-field title="接收数量"><text-line default-value="${quantity}" size="5"/></default-field>
             </field>
-
+            <field name="quantityRejectedTotal"><default-field title="已拒收数量"><display/></default-field></field>
             <field name="quantityRejected">
-                <default-field><text-line default-value="0" size="5"/></default-field>
+                <default-field title="拒收数量"><text-line default-value="0" size="5"/></default-field>
             </field>
-
             <field name="rejectionReasonEnumId">
-                <default-field>
+                <default-field title="拒收原因">
                      <drop-down>
                          <option text="" key=""/>
                          <entity-options key="" text="">
@@ -50,24 +80,9 @@
                      </drop-down>
                 </default-field>
             </field>
-            <field name="assetId">
-                <default-field>
-                     <text-line size="5"/>
-                </default-field>
-            </field>
-
-            <field name="facilityId">
-                <default-field>
-                     <text-line size="5"/>
-                </default-field>
-            </field>
-
-            <field name="submit">
-                <default-field>
-                    <submit/>
-                </default-field>
-            </field>
-
+            <field name="assetId"><default-field title="资产编号"><display text="${assetIdlList[0].assetId}"/></default-field></field>
+            <field name="facilityId"><default-field title="仓库编号"><display text="${assetIdlList[0].facilityId}"/></default-field></field>
+            <field name="submit"><default-field title="提交"><submit/></default-field></field>
         </form-list>
     </widgets>
 </screen>

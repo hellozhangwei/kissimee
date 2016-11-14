@@ -27,7 +27,7 @@
             <field name="statusId">
                 <default-field title="状态"><display-entity entity-name="moqui.basic.StatusItem"/></default-field>
             </field>
-            <field name="destinationFacilityId">
+            <field name="destinationFacilityName">
                 <default-field title="收货仓库"><display/></default-field>
             </field>
             <field name="fromPartyId">

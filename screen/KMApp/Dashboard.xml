@@ -79,9 +79,12 @@
                         <!--<label text="应收金额，笔数" type="h5"/>-->
                     </box-header>
                     <box-body>
-                        <display text="金额:"/>
-                        <display text="${unReceivable.grandTotal?:0}" text-format="#0.00"
-                                 currency-unit-field="currencyUomId"/>
+                        <field name="amount">
+                            <default-field>
+                                <display text="金额:"/>
+                                <display text="${unReceivable.grandTotal?:0}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                            </default-field>
+                        </field>
                     </box-body>
                 </container-box>
             </row-col>
@@ -91,9 +94,12 @@
                         <label text="${'应付金额('+(unPaid.invoiceCount?:0)+')'}"/>
                     </box-header>
                     <box-body>
-                        <display text="金额:"/>
-                        <display text="${unPaid.grandTotal?:0}" text-format="#0.00"
-                                 currency-unit-field="currencyUomId"/>
+                        <field name="amount">
+                            <default-field>
+                                <display text="金额:"/>
+                                <display text="${unPaid.grandTotal?:0}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                            </default-field>
+                        </field>
                     </box-body>
                 </container-box>
             </row-col>
@@ -103,9 +109,12 @@
                         <label text="${'今日订单('+(todayOrder.orderCount?:0)+')'}"/>
                     </box-header>
                     <box-body>
-                        <display text="金额:"/>
-                        <display text="${todayOrder.grandTotal?:0}" text-format="#0.00"
-                                 currency-unit-field="currencyUomId"/>
+                        <field name="amount">
+                            <default-field>
+                                <display text="金额:"/>
+                                <display text="${todayOrder.grandTotal?:0}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                            </default-field>
+                        </field>
                     </box-body>
                 </container-box>
             </row-col>
@@ -115,9 +124,12 @@
                         <label text="${'7日内订单(' + (last7DaysOrder?.orderCount?:0) + ')'}"/>
                     </box-header>
                     <box-body>
-                        <display text="金额:"/>
-                        <display text="${last7DaysOrder?.grandTotal?:0}" text-format="#0.00"
-                                 currency-unit-field="currencyUomId"/>
+                        <field name="amount">
+                            <default-field>
+                                <display text="金额:"/>
+                                <display text="${last7DaysOrder?.grandTotal?:0}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                            </default-field>
+                        </field>
                     </box-body>
                 </container-box>
             </row-col>
@@ -127,9 +139,12 @@
                         <label text="${'本月订单('+(thisMonthOrder.orderCount?:0)+')'}"/>
                     </box-header>
                     <box-body>
-                        <display text="金额:"/>
-                        <display text="${thisMonthOrder?.grandTotal?:0}" text-format="#0.00"
-                                 currency-unit-field="currencyUomId"/>
+                        <field name="amount">
+                            <default-field>
+                                <display text="金额:"/>
+                                <display text="${thisMonthOrder?.grandTotal?:0}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                            </default-field>
+                        </field>
                     </box-body>
                 </container-box>
             </row-col>
@@ -139,9 +154,12 @@
                         <label text="${'本年订单(' + (thisYearOrder?.orderCount?:0) + ')'}"/>
                     </box-header>
                     <box-body>
-                        <display text="金额:"/>
-                        <display text="${thisYearOrder?.grandTotal?:0}" text-format="#0.00"
-                                 currency-unit-field="currencyUomId"/>
+                        <field name="amount">
+                            <default-field>
+                                <display text="金额:"/>
+                                <display text="${thisYearOrder?.grandTotal?:0}" text-format="#0.00" currency-unit-field="currencyUomId"/>
+                            </default-field>
+                        </field>
                     </box-body>
                 </container-box>
             </row-col>

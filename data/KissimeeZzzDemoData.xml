@@ -21,7 +21,7 @@
                                        defaultLocale="zh_CN" defaultCurrencyUomId="CNY" taxGatewayConfigId="LOCAL"/>
 
     <mantle.product.store.ProductStore productStoreId="KM_TMALL_STORE" storeName="岂止美天猫店"
-                                       organizationPartyId="ORG_KISSIMEE" inventoryFacilityId="KM_ZHUOZHOU_WH"
+                                       organizationPartyId="ORG_KISSIMEE" inventoryFacilityId="KM_YIZHUANG_WH"
                                        reservationOrderEnumId="AsResOrdFifoRec" requirementMethodEnumId=""
                                        defaultLocale="zh_CN" defaultCurrencyUomId="CNY" taxGatewayConfigId="LOCAL"/>
 

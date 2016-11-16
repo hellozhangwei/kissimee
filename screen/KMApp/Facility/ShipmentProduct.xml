@@ -46,13 +46,7 @@
 
     <widgets>
         <form-list name="ShipmentItemDetailList" list="shipmentItemDetailList" transition="shipmentOrder" multi="true" paginate="false">
-            <row-actions>
-                <entity-find entity-name="mantle.product.asset.Asset" list="assetIdlList">
-                    <econdition field-name="productId"/>
-                    <select-field field-name="assetId"/>
-                    <select-field field-name="facilityId"/>
-                </entity-find>
-            </row-actions>
+
             <field name="shipmentId"><default-field><hidden/></default-field></field>
             <field name="_useRowSubmit"><default-field><hidden default-value="true"/></default-field></field>
             <field name="listSize"><default-field><hidden default-value="${shipmentItemDetailList.size()}"/></default-field></field>
@@ -80,8 +74,17 @@
                      </drop-down>
                 </default-field>
             </field>
-            <field name="assetId"><default-field title="资产编号"><display text="${assetIdlList[0].assetId}"/></default-field></field>
-            <field name="facilityId"><default-field title="仓库编号"><display text="${assetIdlList[0].facilityId}"/></default-field></field>
+            <field name="facilityId">
+                <default-field title="仓库编号">
+                    <drop-down>
+                        <entity-options key="${facilityId}" text="${facilityName}">
+                            <entity-find entity-name="Facility">
+                                <econdition field-name="ownerPartyId" value="ORG_KISSIMEE"/>
+                            </entity-find>
+                        </entity-options>
+                    </drop-down>
+                </default-field>
+            </field>
             <field name="submit"><default-field title="提交"><submit/></default-field></field>
         </form-list>
     </widgets>

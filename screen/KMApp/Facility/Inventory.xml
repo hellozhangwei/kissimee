@@ -10,12 +10,12 @@
         -->
 
         <transition name="receiveInventory">
-            <service-call name="InventoryServices.receive#Inventory"/>
+            <service-call name="mantle.product.AssetServices.receive#Asset"/>
             <default-response url="." parameter-map="[productId:productId]"/>
         </transition>
 
         <transition name="updateInventory">
-            <service-call name="InventoryServices.update#Inventory"/>
+            <service-call name="mantle.product.AssetServices.change#AssetQuantity"/>
             <default-response url="." parameter-map="[productId:productId]"/>
         </transition>
 
@@ -104,7 +104,7 @@
                         <container-dialog id="updateInventory" button-text="修正库存">
                             <form-single name="UpdateInventory" transition="updateInventory">
                                 <field name="facilityId"><default-field ><hidden/></default-field></field>
-                                <field name="productId"><default-field><hidden/></default-field></field>
+                                <field name="assetId"><default-field><hidden/></default-field></field>
                                 <field name="productName"><default-field title="产品"><display text="${productName} [${productId}]"/></default-field></field>
                                 <field name="facilityId">
                                     <default-field title="仓库">
@@ -118,7 +118,7 @@
                                         </drop-down>
                                     </default-field>
                                 </field>
-                                <field name="quantity"><default-field title="数量"><text-line/></default-field></field>
+                                <field name="quantityDiff"><default-field title="数量"><text-line/></default-field></field>
                                 <field name="submitButton">
                                     <default-field title="修正">
                                         <submit/>

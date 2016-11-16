@@ -1,6 +1,6 @@
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-2.0.xsd">
-
+    <!--
     <service verb="receive" noun="Inventory" type="inline">
         <in-parameters>
             <parameter name="productId" required="true"/>
@@ -32,15 +32,6 @@
 
         </actions>
     </service>
+    -->
 
-    <service verb="update" noun="Inventory" type="inline">
-        <in-parameters>
-            <parameter name="productId" required="true"/>
-            <parameter name="facilityId" required="true"/>
-            <parameter name="quantity" required="true"/>
-        </in-parameters>
-        <actions>
-           <log message="=========todo=udpate#Inventory============"/>
-        </actions>
-    </service>
 </services>

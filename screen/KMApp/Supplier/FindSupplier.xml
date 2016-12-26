@@ -1,8 +1,8 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd" default-menu-include="false" default-menu-title="供应商查询">
 
-    <transition name="editVendor">
-        <default-response url="../EditVendor"></default-response>
+    <transition name="editSupplier">
+        <default-response url="../EditSupplier"></default-response>
     </transition>
     <transition name="createOrganization">
         <actions>
@@ -20,9 +20,9 @@
                 <service-call name="create#mantle.party.PartyRole" in-map="[partyId:partyId, roleTypeId:roleTypeId]"/></if>
         </actions>-->
         <!--<service-call name="PartyServices.create#Organization"/>-->
-        <default-response url="../EditVendor"/>
+        <default-response url="../EditSupplier"/>
     </transition>
-    <pre-actions><set field="roleTypeId" value="Vendor"/></pre-actions>
+    <pre-actions><set field="roleTypeId" value="Supplier"/></pre-actions>
     <actions>
 
         <entity-find entity-name="mantle.party.FindPartyView" list="partyList">
@@ -46,7 +46,7 @@
                 </field>
             </form-single>
         </container-dialog>
-        <form-list name="VendorListForm" list="partyList"  skip-form="true">
+        <form-list name="SupplierListForm" list="partyList"  skip-form="true">
             <field name="partyId">
                 <default-field>
                     <hidden/>
@@ -56,7 +56,7 @@
                 <header-field title="供应商ID" show-order-by="case-insensitive">
                 </header-field>
                 <default-field>
-                    <link url="editVendor" text="${pseudoId}"/>
+                    <link url="editSupplier" text="${pseudoId}"/>
                 </default-field>
             </field>
             <field name="organizationName">

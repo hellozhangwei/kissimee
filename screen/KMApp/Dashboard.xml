@@ -17,24 +17,15 @@
 
             def startOfToday = new Date()
             startOfToday.clearTime()
-            //startOfToday.set(hourOfDay: 0)
-            //startOfToday.set(minute:0)
-            //startOfToday.set(second:0)
 
             def startOfThisMonth = new Date()
             startOfThisMonth.clearTime()
             startOfThisMonth.set(date: 1)
-            //startOfThisMonth.set(hourOfDay: 0)
-            //startOfThisMonth.set(minute:0)
-            //startOfThisMonth.set(second:0)
-            
+
             def startOfThisYear = new Date()
             startOfThisYear.clearTime()
             startOfThisYear.set(month: 0)
             startOfThisYear.set(date: 1)
-            //startOfThisYear.set(hourOfDay: 0)
-            //startOfThisYear.set(minute:0)
-            //startOfThisYear.set(second:0)
 
         </script>
         <entity-find entity-name="mantle.account.invoice.InvoiceSummary" list="unreceivableInvoiceList">

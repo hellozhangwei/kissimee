@@ -2,21 +2,39 @@
             default-menu-title="主菜单" default-menu-index="10">
     <actions>
         <script>
-            Calendar c1 = ec.user.nowCalendar
-            int thisYear = c1.get(1);
-            int thisMonth = c1.get(2)+1;
-            int firstDayOfMonth = 1;
-            int today = c1.get(Calendar.DAY_OF_MONTH);
-            int week = c1.get(Calendar.DAY_OF_WEEK)-1;
 
-            Date dt= new Date();
-            long now = dt.getTime();
-            long sevenDay = now - 7*24*60*60*1000;
+            Calendar cal = Calendar.getInstance()
+            cal.clear()
+            cal.setFirstDayOfWeek(Calendar.MONDAY)
+            cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek())
+            def startOfThisWeek = cal.getTime()
 
-            c1.setTimeInMillis(sevenDay);
-            int sevenBeforeYear = c1.get(1);
-            int sevenBeforeMonth = c1.get(2)+1;
-            int sevenBeforeDay = c1.get(Calendar.DAY_OF_MONTH);
+            //def startOfThisWeek = new Date()
+            //startOfThisWeek.set(dayOfWeek: Calendar.getInstance().getFirstDayOfWeek())
+            //startOfThisWeek.set(hourOfDay: 0)
+            //startOfThisWeek.set(minute:0)
+            //startOfThisWeek.set(second:0)
+
+            def startOfToday = new Date()
+            startOfToday.clearTime()
+            //startOfToday.set(hourOfDay: 0)
+            //startOfToday.set(minute:0)
+            //startOfToday.set(second:0)
+
+            def startOfThisMonth = new Date()
+            startOfThisMonth.clearTime()
+            startOfThisMonth.set(date: 1)
+            //startOfThisMonth.set(hourOfDay: 0)
+            //startOfThisMonth.set(minute:0)
+            //startOfThisMonth.set(second:0)
+            
+            def startOfThisYear = new Date()
+            startOfThisYear.clearTime()
+            startOfThisYear.set(month: 0)
+            startOfThisYear.set(date: 1)
+            //startOfThisYear.set(hourOfDay: 0)
+            //startOfThisYear.set(minute:0)
+            //startOfThisYear.set(second:0)
 
         </script>
         <entity-find entity-name="mantle.account.invoice.InvoiceSummary" list="unreceivableInvoiceList">
@@ -33,32 +51,30 @@
             <select-field field-name="invoiceCount"/>
             <select-field field-name="currencyUomId"/>
         </entity-find>
+        <log message="=======startOfToday=====${startOfToday.format('yyyy-MM-dd HH:mm:ss')}"/>
         <entity-find entity-name="cn.com.kissimee.OrderStatisticsView" list="todayOrderList">
-            <econdition field-name="placeDateYear" operator="equals" from="thisYear"/>
-            <econdition field-name="placeDateMonth" operator="equals" from="thisMonth"/>
-            <econdition field-name="placeDateDay" operator="equals" from="today"/>
+            <econdition field-name="placedDate" operator="greater-equals" from="startOfToday"/>
             <select-field field-name="grandTotal"/>
             <select-field field-name="currencyUomId"/>
             <select-field field-name="orderCount"/>
         </entity-find>
+        <log message="===========startOfThisWeek==${startOfThisWeek.format('yyyy-MM-dd HH:mm:ss')}====="/>
         <entity-find entity-name="cn.com.kissimee.OrderStatisticsView" list="last7DaysOrderList">
-            <econdition field-name="placeDateYear" operator="equals" from="sevenBeforeYear"/>
-            <econdition field-name="placeDateMonth" operator="equals" from="sevenBeforeMonth"/>
-            <econdition field-name="placeDateDay" operator="greater-equals" from="sevenBeforeDay"/>
+            <econdition field-name="placedDate" operator="greater-equals" from="startOfThisWeek"/>
             <select-field field-name="grandTotal"/>
             <select-field field-name="currencyUomId"/>
             <select-field field-name="orderCount"/>
         </entity-find>
+        <log message="=======startOfThisMonth=====${startOfThisMonth.format('yyyy-MM-dd HH:mm:ss')}"/>
         <entity-find entity-name="cn.com.kissimee.OrderStatisticsView" list="thisMonthOrderList">
-            <econdition field-name="placeDateYear" operator="equals" from="thisYear"/>
-            <econdition field-name="placeDateMonth" operator="equals" from="thisMonth"/>
-            <econdition field-name="placeDateDay" operator="greater-equals" from="firstDayOfMonth"/>
+            <econdition field-name="placedDate" operator="greater-equals" from="startOfThisMonth"/>
             <select-field field-name="grandTotal"/>
             <select-field field-name="currencyUomId"/>
             <select-field field-name="orderCount"/>
         </entity-find>
+        <log message="=======startOfThisYear=====${startOfThisYear.format('yyyy-MM-dd HH:mm:ss')}"/>
         <entity-find entity-name="cn.com.kissimee.OrderStatisticsView" list="thisYearList">
-            <econdition field-name="placeDateYear" operator="equals" from="thisYear"/>
+            <econdition field-name="placedDate" operator="greater-equals" from="startOfThisYear"/>
             <select-field field-name="grandTotal"/>
             <select-field field-name="currencyUomId"/>
             <select-field field-name="orderCount"/>
@@ -76,7 +92,6 @@
                 <container-box>
                     <box-header>
                         <label text="${'应收金额('+(unReceivable.invoiceCount?:0)+')'}"/>
-                        <!--<label text="应收金额，笔数" type="h5"/>-->
                     </box-header>
                     <box-body>
                         <field name="amount">
@@ -121,7 +136,7 @@
             <row-col md="2">
                 <container-box>
                     <box-header>
-                        <label text="${'7日内订单(' + (last7DaysOrder?.orderCount?:0) + ')'}"/>
+                        <label text="${'本周订单(' + (last7DaysOrder?.orderCount?:0) + ')'}"/>
                     </box-header>
                     <box-body>
                         <field name="amount">

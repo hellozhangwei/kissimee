@@ -18,10 +18,4 @@
         <field name="cityGeoId" type="id"/>
     </extend-entity>
 
-    <extend-entity entity-name="OrderHeader" package="mantle.order">
-        <field name="placeDateYear" type="number-integer"/>
-        <field name="placeDateMonth" type="number-integer"/>
-        <field name="placeDateDay" type="number-integer"/>
-    </extend-entity>
-
 </entities>

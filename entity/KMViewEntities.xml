@@ -126,9 +126,7 @@
         </member-entity>
         <alias name="vendorPartyId" entity-alias="ORPT"/>
         <alias name="statusId" entity-alias="ORHD" field="statusId"/>
-        <alias name="placeDateYear" entity-alias="ORHD" field="placeDateYear"/>
-        <alias name="placeDateMonth" entity-alias="ORHD" field="placeDateMonth"/>
-        <alias name="placeDateDay" entity-alias="ORHD" field="placeDateDay"/>
+        <alias name="placedDate" entity-alias="ORHD" field="placedDate"/>
         <alias name="currencyUomId" entity-alias="ORHD" field="currencyUomId"/>
         <alias name="grandTotal" entity-alias="ORHD" field="grandTotal" function="sum"/>
         <alias name="orderCount" entity-alias="ORHD" field="orderId" function="count"/>

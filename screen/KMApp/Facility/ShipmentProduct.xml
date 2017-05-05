@@ -1,6 +1,6 @@
 
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd" default-menu-include="false">
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd" default-menu-include="false">
 
     <parameter name="shipmentId" required="true"/>
     <transition name="shipmentOrder">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-2.0.xsd">
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-2.1.xsd">
 
     <view-entity entity-name="ProductSearchView" package="cn.com.kissimee">
         <member-entity entity-alias="PROD" entity-name="mantle.product.Product"/>
@@ -15,6 +15,7 @@
         </member-entity>
         <alias-all entity-alias="PC">
             <exclude field="pseudoId"/>
+            <exclude field="description"/>
         </alias-all>
         <alias-all entity-alias="PROD"/>
         <alias-all entity-alias="PI"/>
@@ -37,7 +38,7 @@
         <alias entity-alias="AST" name="quantityOnHandTotal"/>
         <alias entity-alias="AST" name="availableToPromiseTotal"/>
     </view-entity>
-    <view-entity entity-name="FindPartyView" package="mantle.party" >
+    <view-entity entity-name="FindPartyView" package="cn.com.kissimee" >
         <member-entity entity-alias="PTY" entity-name="Party"/>
         <member-entity entity-alias="ORG" entity-name="Organization" join-from-alias="PTY" join-optional="true">
             <key-map field-name="partyId"/></member-entity>
@@ -59,10 +60,10 @@
         <alias-all entity-alias="PTRL"/>
         <alias-all entity-alias="ORG"/>
         <alias-all entity-alias="PER"/>
-        <alias-all entity-alias="GEO1"/>
+        <alias entity-alias="GEO1" field="geoName" name="address"/>
         <alias-all entity-alias="GEO2"/>
     </view-entity>
-    <view-entity entity-name="PartyContactMechPostalAddress" package="mantle.party.contact">
+    <view-entity entity-name="PartyContactMechPostalAddress" package="cn.com.kissimee">
         <member-entity entity-alias="PCM" entity-name="mantle.party.contact.PartyContactMech"/>
         <member-entity entity-alias="CM" entity-name="mantle.party.contact.ContactMech" join-from-alias="PCM">
             <key-map field-name="contactMechId"/></member-entity>
@@ -78,7 +79,7 @@
     </view-entity>
 
 
-    <view-entity entity-name="PartyContactMechInfo" package="mantle.party.contact">
+    <view-entity entity-name="PartyContactMechInfo" package="cn.com.kissimee">
         <member-entity entity-alias="PCM" entity-name="mantle.party.contact.PartyContactMech"/>
         <member-entity entity-alias="CM" entity-name="mantle.party.contact.ContactMech" join-from-alias="PCM">
             <key-map field-name="contactMechId"/></member-entity>
@@ -86,7 +87,7 @@
         <alias-all entity-alias="CM"/>
     </view-entity>
 
-    <view-entity entity-name="PartyContactMechTelecomNumber" package="mantle.party.contact">
+    <view-entity entity-name="PartyContactMechTelecomNumber" package="cn.com.kissimee">
         <member-entity entity-alias="PCM" entity-name="mantle.party.contact.PartyContactMech"/>
         <member-entity entity-alias="CM" entity-name="mantle.party.contact.ContactMech" join-from-alias="PCM">
             <key-map field-name="contactMechId"/></member-entity>

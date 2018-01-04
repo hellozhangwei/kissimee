@@ -28,6 +28,9 @@
             startOfThisYear.set(date: 1)
 
         </script>
+        <set field="productId" value="1"/>
+        <script>ec.getTool("KIE", null).getStatelessKieSession("KissimeePriceKS").execute([])</script>
+
         <entity-find entity-name="mantle.account.invoice.InvoiceSummary" list="unreceivableInvoiceList">
             <econdition field-name="fromPartyId" value="ORG_KISSIMEE"/>
             <econdition field-name="statusId" operator="in" from="['InvoiceInProcess', 'InvoiceIncoming', 'InvoiceReceived']"/>

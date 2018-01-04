@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://jboss.org/kie/6.0.0/kmodule">
+
+    <!--see more example in https://github.com/kiegroup/drools/blob/master/drools-examples/src/main/resources/org/drools/examples/helloworld/HelloWorld.drl-->
+    <kbase name="KissimeePriceKB" packages="com.kissimee.price">
+        <ksession name="KissimeePriceKS" type="stateless"/>
+    </kbase>
+
+</kmodule>

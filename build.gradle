@@ -1,0 +1,16 @@
+
+apply plugin: 'groovy'
+
+sourceCompatibility = '1.8'
+def moquiDir = file(projectDir.absolutePath + '/../../..')
+def frameworkDir = file(moquiDir.absolutePath + '/framework')
+
+repositories {
+    flatDir name: 'localLib', dirs: frameworkDir.absolutePath + '/lib'
+    jcenter()
+}
+
+dependencies {
+    compile project(':framework')
+    testCompile project(':framework').configurations.testCompile.allDependencies
+}
